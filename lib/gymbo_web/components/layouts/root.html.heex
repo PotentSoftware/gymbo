@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <title><%= assigns[:page_title] || "Gymbo" %> · Fitness For Everyone</title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
+    <style>
+      /* Custom styles for gym theme */
+      :root {
+        --primary-red: #ff4136;
+        --dark-gray: #2b2b2b;
+        --light-gray: #f4f4f4;
+      }
+      
+      body {
+        background-color: var(--dark-gray);
+        color: white;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+
+      .auth-nav {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 1rem;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 50;
+      }
+
+      .auth-button {
+        background-color: var(--primary-red);
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+
+      .auth-button:hover {
+        background-color: #e63a30;
+        transform: translateY(-1px);
+      }
+
+      .gym-header {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+        background-size: cover;
+        background-position: center;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+        margin-top: 4rem;
+      }
+
+      .gym-title {
+        font-size: 3rem;
+        font-weight: 800;
+        color: white;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .gym-subtitle {
+        font-size: 1.25rem;
+        color: var(--light-gray);
+      }
+
+      .main-content {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="auth-nav">
+      <ul class="flex items-center gap-6 justify-end max-w-7xl mx-auto px-4">
+        <%= if @current_user do %>
+          <li class="text-light-gray">
+            <%= @current_user.email %>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/settings"}
+              class="auth-button"
+            >
+              Settings
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_out"}
+              method="delete"
+              class="auth-button"
+            >
+              Log out
+            </.link>
+          </li>
+        <% else %>
+          <li>
+            <.link
+              href={~p"/users/register"}
+              class="auth-button"
+            >
+              Register
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_in"}
+              class="auth-button"
+            >
+              Log in
+            </.link>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+
+    <header class="gym-header">
+      <h1 class="gym-title">Gymbo</h1>
+      <p class="gym-subtitle">Book Your Workout Time. Transform Your Life.</p>
+    </header>
+
+    <main class="main-content">
+      <%= @inner_content %>
+    </main>
+  </body>
+</html>
