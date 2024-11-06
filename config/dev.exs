@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :gymbo, Gymbo.Repo,
   username: "postgres",
-  password: "letme1n",
+  password: "postgres:",
   hostname: "localhost",
   database: "gymbo_dev",
   stacktrace: true,

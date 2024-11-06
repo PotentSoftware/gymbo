@@ -81,43 +81,20 @@
   <body>
     <nav class="auth-nav">
       <ul class="flex items-center gap-6 justify-end max-w-7xl mx-auto px-4">
-        <%= if @current_user do %>
-          <li class="text-light-gray">
-            <%= @current_user.email %>
+        <%= if assigns[:current_user] do %>
+          <li class="text-white"><%= assigns.current_user.email %></li>
+          <li>
+            <.link href={~p"/users/settings"} class="auth-button">Settings</.link>
           </li>
           <li>
-            <.link
-              href={~p"/users/settings"}
-              class="auth-button"
-            >
-              Settings
-            </.link>
-          </li>
-          <li>
-            <.link
-              href={~p"/users/log_out"}
-              method="delete"
-              class="auth-button"
-            >
-              Log out
-            </.link>
+            <.link href={~p"/users/log_out"} method="delete" class="auth-button">Log out</.link>
           </li>
         <% else %>
           <li>
-            <.link
-              href={~p"/users/register"}
-              class="auth-button"
-            >
-              Register
-            </.link>
+            <.link href={~p"/users/register"} class="auth-button">Register</.link>
           </li>
           <li>
-            <.link
-              href={~p"/users/log_in"}
-              class="auth-button"
-            >
-              Log in
-            </.link>
+            <.link href={~p"/users/log_in"} class="auth-button">Log in</.link>
           </li>
         <% end %>
       </ul>
@@ -129,6 +106,7 @@
     </header>
 
     <main class="main-content">
+      <.flash_group flash={@flash} />
       <%= @inner_content %>
     </main>
   </body>

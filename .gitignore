@@ -35,3 +35,4 @@ gymbo-*.tar
 npm-debug.log
 /assets/node_modules/
 
+git_token
